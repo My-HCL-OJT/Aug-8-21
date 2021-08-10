@@ -29,39 +29,42 @@ public class EmployeeController {
 	@GetMapping(value = "/")
 	public ResponseEntity<ResponseWrapper<String>> showEmployees() {
 		log.trace("showEmployees start page of the app");
-		return ResponseEntity.ok(new ResponseWrapper<>(false, HttpStatus.OK,
+		return ResponseEntity.ok(new ResponseWrapper<>(false, HttpStatus.CREATED,
 				"Welcome /createEmployees to create employees, /getEmployees/id to get employee, /deleteEmployees/id to delete employee"));
 	}
 
 	@PostMapping(value = "/createEmployees")
 	public ResponseEntity<ResponseWrapper<Employee>> createEmployee(@RequestBody EmployeeDao dao) {
 		log.info("employee created " + dao.getName());
-		return ResponseEntity.ok(new ResponseWrapper<>(false, HttpStatus.OK, es.createEmployee(dao)));
+		return new ResponseEntity<>(new ResponseWrapper<>(false, HttpStatus.CREATED, es.createEmployee(dao)),
+				HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = "/getEmployees")
 	public ResponseEntity<ResponseWrapper<List<Employee>>> getEmployee() {
 		log.info("showing all employees");
-		return ResponseEntity.ok(new ResponseWrapper<>(false, HttpStatus.OK, es.getAllEmployees()));
+		return new ResponseEntity<>(new ResponseWrapper<>(false, HttpStatus.OK, es.getAllEmployees()), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/getEmployees/{id}")
 	public ResponseEntity<ResponseWrapper<Employee>> getEmployee(@PathVariable Integer id) {
 		log.info("showing employee with id : " + id);
-		return ResponseEntity.ok(new ResponseWrapper<>(false, HttpStatus.OK, es.getEmployee(id)));
+		return new ResponseEntity<>(new ResponseWrapper<>(false, HttpStatus.OK, es.getEmployee(id)), HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/deleteEmployees/{id}")
 	public ResponseEntity<ResponseWrapper<Employee>> deleteEmployee(@PathVariable Integer id) {
 		log.warn("deleting employee with id : " + id);
-		return ResponseEntity.ok(new ResponseWrapper<>(false, HttpStatus.OK, es.getEmployee(id)));
+		es.deleteEmployee(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PutMapping(value = "/updateEmployees/{id}")
 	public ResponseEntity<ResponseWrapper<Employee>> updateEmployee(@PathVariable Integer id,
 			@RequestBody EmployeeDao dao) {
 		log.warn("updating employee with id : " + id + " and name :" + dao.getName());
-		return ResponseEntity.ok(new ResponseWrapper<>(false, HttpStatus.OK, es.updateEmployee(dao, id)));
+		return new ResponseEntity<>(new ResponseWrapper<>(false, HttpStatus.OK, es.updateEmployee(dao, id)),
+				HttpStatus.OK);
 	}
 
 }

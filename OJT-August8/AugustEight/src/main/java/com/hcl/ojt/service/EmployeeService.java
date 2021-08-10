@@ -9,9 +9,9 @@ import com.hcl.ojt.entity.Employee;
 import com.hcl.ojt.entity.EmployeeDao;
 import com.hcl.ojt.repository.EmployeeRepository;
 
-/*Create 
+/*Create createEmployee 
  * Read getEmployee
- * Update 
+ * Update updateEmployee
  * Delete deleteEmployee*/
 @Service
 public class EmployeeService {
