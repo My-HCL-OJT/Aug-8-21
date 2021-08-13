@@ -23,7 +23,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	
 	@Bean
 	public Docket jsonApi() {
-		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.basePackage("com.hcl.phase1.project")).build();
+		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.basePackage("com.hcl.ojt")).build();
 	}
 
 }
